@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="accessRequestApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zugangsberechtigungsantrag</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Zugangsberechtigungsantrag</h1>
+    <div ng-view></div>
+</div>
+
+<script type="text/ng-template" id="form1.html">
+    <form name="accessRequestForm" ng-submit="goToForm2()">
+        <fieldset>
+            <legend>Antragsdaten</legend>
+            <div class="form-row">
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="employeeName">Name des neuen Mitarbeiters</label>
+                        <input type="text" id="employeeName" ng-model="request.employeeName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicant">Antragsteller</label>
+                        <input type="text" id="applicant" ng-model="request.applicant" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="releaseDate">Datum der Freischaltung</label>
+                        <input type="date" id="releaseDate" ng-model="request.releaseDate" required>
+                    </div>
+                </div>
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="description">Beschreibung des Antrags</label>
+                        <textarea id="description" ng-model="request.description"></textarea>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Zugangsberechtigung</legend>
+            <div class="form-row">
+                <div class="form-column">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="keyAccess" ng-model="request.keyAccess">
+                        <label for="keyAccess">Mitarbeiter erhält Schlüssel?</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="chipAccess" ng-model="request.chipAccess">
+                        <label for="chipAccess">Mitarbeiter erhält Chip?</label>
+                    </div>
+                </div>
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="securityLevel">Sicherheitsstufe</label>
+                        <select id="securityLevel" ng-model="request.securityLevel" ng-options="level.value as level.label for level in securityLevels" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="securityLevelRating">Bewertung für die Sicherheitsstufe</label>
+                        <input type="text" id="securityLevelRating" ng-model="request.securityLevelRating">
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <button type="submit">Weiter</button>
+    </form>
+</script>
+
+<script type="text/ng-template" id="form2.html">
+    <form name="additionalDetailsForm" ng-submit="submitRequest()">
+        <fieldset>
+            <legend>Zusätzliche Mitarbeiterdetails</legend>
+            <div class="form-group">
+                <label for="department">Abteilung</label>
+                <input type="text" id="department" ng-model="request.department" required>
+            </div>
+            <div class="form-group">
+                <label for="position">Position</label>
+                <input type="text" id="position" ng-model="request.position" required>
+            </div>
+        </fieldset>
+        <button type="button" ng-click="goBackToForm1()">Zurück</button>
+        <button type="submit">Absenden</button>
+    </form>
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
